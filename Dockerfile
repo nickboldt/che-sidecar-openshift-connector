@@ -11,11 +11,11 @@
 FROM alpine:3.10.2
 
 # odo and oc versions have to match the ones defined in https://github.com/redhat-developer/vscode-openshift-tools/blob/master/src/tools.json
-ENV GLIBC_VERSION=2.30-r0 \
-    ODO_VERSION=v1.1.0 \
-    OC_VERSION=3.11.170 \
-    KUBECTL_VERSION=v1.17.2 \
-    HOME=/home/theia
+ENV GLIBC_VERSION="2.30-r0" \
+    ODO_VERSION="v1.1.0" \
+    OC_VERSION="3.11.170" \
+    KUBECTL_VERSION="v1.17.2" \
+    HOME="/home/theia"
 
 RUN mkdir /projects ${HOME} && \
     # Change permissions to let any arbitrary user
@@ -32,7 +32,7 @@ RUN apk add --update --no-cache bash && \
     apk --update --allow-untrusted add glibc-${GLIBC_VERSION}.apk && \
     rm -f glibc-${GLIBC_VERSION}.apk && \
     # get oc
-    curl -sSLo - https://mirror.openshift.com/pub/openshift-v3/clients/${OC_VERSION}/linux/oc.tar.gz | tar -xz oc -C /usr/local/bin && \ 
+    wget -O - https://mirror.openshift.com/pub/openshift-v3/clients/${OC_VERSION}/linux/oc.tar.gz | tar -xz oc -C /usr/local/bin && \ 
     # get odo
     wget -O /usr/local/bin/odo https://mirror.openshift.com/pub/openshift-v4/clients/odo/${ODO_VERSION}/odo-linux-amd64 && \
     # get kubectl
